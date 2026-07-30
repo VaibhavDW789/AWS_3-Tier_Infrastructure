@@ -22,3 +22,13 @@ output "internet_gateway_id" {
   description = "Created Internet Gateway ID"
   value       = module.networking.internet_gateway_id
 }
+
+output "nat_gateway_ids" {
+  description = "Created NAT Gateway IDs"
+  value       = module.networking.nat_gateway_ids
+}
+
+output "nat_gateway_public_ips" {
+  description = "Public IPs of the created NAT Gateways"
+  value       = module.networking.nat_gateway_public_ips
+}

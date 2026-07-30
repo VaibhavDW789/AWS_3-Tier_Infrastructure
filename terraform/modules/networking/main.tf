@@ -71,3 +71,37 @@ resource "aws_internet_gateway" "this" {
     ManagedBy   = "Terraform"
   }
 }
+
+resource "aws_eip" "nat" {
+
+  for_each = aws_subnet.public
+
+  domain = "vpc"
+
+  tags = {
+    Name        = "${var.project_name}-${var.environment}-${each.key}-eip"
+    Project     = var.project_name
+    Environment = var.environment
+    ManagedBy   = "Terraform"
+  }
+}
+
+resource "aws_nat_gateway" "this" {
+
+  for_each = aws_subnet.public
+
+  allocation_id = aws_eip.nat[each.key].id
+
+  subnet_id = each.value.id
+
+  depends_on = [
+    aws_internet_gateway.this
+  ]
+
+  tags = {
+    Name        = "${var.project_name}-${var.environment}-${each.key}-nat"
+    Project     = var.project_name
+    Environment = var.environment
+    ManagedBy   = "Terraform"
+  }
+}

@@ -17,3 +17,19 @@ output "internet_gateway_id" {
   description = "ID of the created Internet Gateway"
   value       = aws_internet_gateway.this.id
 }
+
+output "nat_gateway_ids" {
+  description = "IDs of the created NAT Gateways"
+  value = {
+    for k, nat in aws_nat_gateway.this :
+    k => nat.id
+  }
+}
+
+output "nat_gateway_public_ips" {
+  description = "Public IPs of the created NAT Gateways"
+  value = {
+    for k, eip in aws_eip.nat :
+    k => eip.public_ip
+  }
+}
