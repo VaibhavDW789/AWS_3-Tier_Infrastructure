@@ -27,3 +27,10 @@ variable "private_app_subnets" {
     az   = string
   }))
 }
+
+variable "private_db_subnets" {
+  type = map(object({
+    cidr = string
+    az   = string
+  }))
+}
