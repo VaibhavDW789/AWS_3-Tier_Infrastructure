@@ -4,6 +4,11 @@ output "vpc_id" {
 }
 
 output "public_subnet_ids" {
-  description = "Created public subnet IDs"
-  value       = module.vpc.public_subnet_ids
+  description = "Created public presentation subnet IDs"
+  value       = module.networking.public_subnet_ids
+}
+
+output "private_app_subnet_ids" {
+  description = "Created private application subnet IDs"
+  value       = module.networking.private_app_subnet_ids
 }
