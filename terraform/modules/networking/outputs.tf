@@ -33,3 +33,16 @@ output "nat_gateway_public_ips" {
     k => eip.public_ip
   }
 }
+
+output "public_route_table_id" {
+  description = "ID of the created public route table"
+  value       = aws_route_table.public.id
+}
+
+output "private_route_table_ids" {
+  description = "IDs of the created private route tables"
+  value = {
+    for k, rt in aws_route_table.private :
+    k => rt.id
+  }
+}

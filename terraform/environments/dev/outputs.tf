@@ -32,3 +32,13 @@ output "nat_gateway_public_ips" {
   description = "Public IPs of the created NAT Gateways"
   value       = module.networking.nat_gateway_public_ips
 }
+
+output "public_route_table_id" {
+  description = "Created public route table ID"
+  value       = module.networking.public_route_table_id
+}
+
+output "private_route_table_ids" {
+  description = "Created private route table IDs"
+  value       = module.networking.private_route_table_ids
+}

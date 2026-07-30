@@ -79,7 +79,7 @@ resource "aws_eip" "nat" {
   domain = "vpc"
 
   tags = {
-    Name        = "${var.project_name}-${var.environment}-${each.key}-eip"
+    Name        = "${var.project_name}-${var.environment}-${replace(each.key, "public-subnet", "public-eip")}"
     Project     = var.project_name
     Environment = var.environment
     ManagedBy   = "Terraform"
@@ -99,9 +99,77 @@ resource "aws_nat_gateway" "this" {
   ]
 
   tags = {
-    Name        = "${var.project_name}-${var.environment}-${each.key}-nat"
+    Name        = "${var.project_name}-${var.environment}-${replace(each.key, "public-subnet", "public-nat")}"
     Project     = var.project_name
     Environment = var.environment
     ManagedBy   = "Terraform"
   }
+}
+
+resource "aws_route_table" "public" {
+
+  vpc_id = var.vpc_id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+
+    gateway_id = aws_internet_gateway.this.id
+  }
+
+  tags = {
+    Name        = "${var.project_name}-${var.environment}-public-rt"
+    Project     = var.project_name
+    Environment = var.environment
+    ManagedBy   = "Terraform"
+  }
+}
+
+resource "aws_route_table" "private" {
+
+  for_each = aws_nat_gateway.this
+
+  vpc_id = var.vpc_id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+
+    nat_gateway_id = each.value.id
+  }
+
+  tags = {
+    Name        = "${var.project_name}-${var.environment}-${replace(each.key, "public-subnet", "private-rt")}"
+    Project     = var.project_name
+    Environment = var.environment
+    ManagedBy   = "Terraform"
+  }
+}
+
+resource "aws_route_table_association" "public" {
+
+  for_each = aws_subnet.public
+
+  subnet_id      = each.value.id
+  route_table_id = aws_route_table.public.id
+}
+
+resource "aws_route_table_association" "private_app" {
+
+  for_each = aws_subnet.private_app
+
+  subnet_id = each.value.id
+
+  route_table_id = aws_route_table.private[
+    replace(each.key, "private-app-subnet", "public-subnet")
+  ].id
+}
+
+resource "aws_route_table_association" "private_db" {
+
+  for_each = aws_subnet.private_db
+
+  subnet_id = each.value.id
+
+  route_table_id = aws_route_table.private[
+    replace(each.key, "private-db-subnet", "public-subnet")
+  ].id
 }
