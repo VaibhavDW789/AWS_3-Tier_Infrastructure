@@ -17,3 +17,8 @@ output "private_db_subnet_ids" {
   description = "Created private database subnet IDs"
   value       = module.networking.private_db_subnet_ids
 }
+
+output "internet_gateway_id" {
+  description = "Created Internet Gateway ID"
+  value       = module.networking.internet_gateway_id
+}

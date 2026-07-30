@@ -59,3 +59,15 @@ resource "aws_subnet" "private_db" {
     ManagedBy   = "Terraform"
   }
 }
+
+resource "aws_internet_gateway" "this" {
+
+  vpc_id = var.vpc_id
+
+  tags = {
+    Name        = "${var.project_name}-${var.environment}-igw"
+    Project     = var.project_name
+    Environment = var.environment
+    ManagedBy   = "Terraform"
+  }
+}
