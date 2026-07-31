@@ -30,3 +30,13 @@ module "load_balancer" {
   public_subnet_ids     = module.networking.public_subnet_ids
   alb_security_group_id = module.security_group.alb_security_group_id
 }
+
+module "autoscaling" {
+  source                = "../../modules/autoscaling"
+  project_name          = var.project_name
+  environment           = var.environment
+  instance_type         = var.instance_type
+  key_name              = var.key_name
+  app_security_group_id = module.security_group.app_security_group_id
+  docker_image          = var.docker_image
+}
