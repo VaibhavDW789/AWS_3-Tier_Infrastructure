@@ -32,11 +32,13 @@ module "load_balancer" {
 }
 
 module "autoscaling" {
-  source                = "../../modules/autoscaling"
-  project_name          = var.project_name
-  environment           = var.environment
-  instance_type         = var.instance_type
-  key_name              = var.key_name
-  app_security_group_id = module.security_group.app_security_group_id
-  docker_image          = var.docker_image
+  source                 = "../../modules/autoscaling"
+  project_name           = var.project_name
+  environment            = var.environment
+  instance_type          = var.instance_type
+  key_name               = var.key_name
+  app_security_group_id  = module.security_group.app_security_group_id
+  docker_image           = var.docker_image
+  private_app_subnet_ids = module.networking.private_app_subnet_ids
+  target_group_arn       = module.load_balancer.target_group_arn
 }

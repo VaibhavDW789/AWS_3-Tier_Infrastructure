@@ -27,3 +27,31 @@ variable "docker_image" {
   description = "Docker image to be used for the application"
   type        = string
 }
+
+variable "private_app_subnet_ids" {
+  description = "List of IDs of the private application subnets"
+  type        = list(string)
+}
+
+variable "target_group_arn" {
+  description = "ARN of the target group"
+  type        = string
+}
+
+variable "min_size" {
+  description = "Minimum size of the Auto Scaling group"
+  type        = number
+  default     = 2
+}
+
+variable "desired_capacity" {
+  description = "Desired capacity of the Auto Scaling group"
+  type        = number
+  default     = 2
+}
+
+variable "max_size" {
+  description = "Maximum size of the Auto Scaling group"
+  type        = number
+  default     = 4
+}
