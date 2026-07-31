@@ -21,3 +21,12 @@ module "security_group" {
   environment  = var.environment
   vpc_id       = module.vpc.vpc_id
 }
+
+module "load_balancer" {
+  source                = "../../modules/load-balancer"
+  project_name          = var.project_name
+  environment           = var.environment
+  vpc_id                = module.vpc.vpc_id
+  public_subnet_ids     = module.networking.public_subnet_ids
+  alb_security_group_id = module.security_group.alb_security_group_id
+}
