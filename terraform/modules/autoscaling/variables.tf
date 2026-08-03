@@ -18,6 +18,11 @@ variable "key_name" {
   type        = string
 }
 
+variable "instance_profile_name" {
+  description = "Name of the IAM instance profile"
+  type        = string
+}
+
 variable "app_security_group_id" {
   description = "ID of the created Application EC2 Security Group"
   type        = string

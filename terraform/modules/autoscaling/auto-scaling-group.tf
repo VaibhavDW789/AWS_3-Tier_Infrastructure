@@ -1,8 +1,8 @@
 resource "aws_autoscaling_group" "app" {
-  name = "${var.project_name}-${var.environment}-asg"
-  desired_capacity = var.desired_capacity
-  min_size         = var.min_size
-  max_size         = var.max_size
+  name                = "${var.project_name}-${var.environment}-asg"
+  desired_capacity    = var.desired_capacity
+  min_size            = var.min_size
+  max_size            = var.max_size
   vpc_zone_identifier = var.private_app_subnet_ids
 
   target_group_arns = [

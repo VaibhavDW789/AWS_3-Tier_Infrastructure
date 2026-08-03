@@ -41,4 +41,11 @@ module "autoscaling" {
   docker_image           = var.docker_image
   private_app_subnet_ids = module.networking.private_app_subnet_ids
   target_group_arn       = module.load_balancer.target_group_arn
+  instance_profile_name  = module.iam.instance_profile_name
+}
+
+module "iam" {
+  source       = "../../modules/iam"
+  project_name = var.project_name
+  environment  = var.environment
 }

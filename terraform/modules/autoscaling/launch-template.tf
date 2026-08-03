@@ -5,6 +5,10 @@ resource "aws_launch_template" "app" {
   key_name               = var.key_name
   update_default_version = true
 
+  iam_instance_profile {
+    name = var.instance_profile_name
+  }
+
   vpc_security_group_ids = [
     var.app_security_group_id
   ]
