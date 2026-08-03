@@ -70,3 +70,8 @@ variable "database_secret_arn" {
   description = "ARN of the database secret in AWS Secrets Manager"
   type        = string
 }
+
+variable "db_endpoint" {
+  description = "Endpoint of the database instance"
+  type        = string
+}

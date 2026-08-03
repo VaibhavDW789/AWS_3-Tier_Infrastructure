@@ -44,6 +44,7 @@ module "autoscaling" {
   instance_profile_name  = module.iam.instance_profile_name
   database_endpoint      = module.database.db_endpoint
   database_secret_arn    = module.database.master_user_secret_arn
+  db_endpoint            = module.database.db_endpoint
 }
 
 module "iam" {
