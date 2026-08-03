@@ -60,3 +60,13 @@ variable "max_size" {
   type        = number
   default     = 4
 }
+
+variable "database_endpoint" {
+  description = "Endpoint of the database instance"
+  type        = string
+}
+
+variable "database_secret_arn" {
+  description = "ARN of the database secret in AWS Secrets Manager"
+  type        = string
+}

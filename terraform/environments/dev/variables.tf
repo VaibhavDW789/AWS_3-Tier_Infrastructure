@@ -46,3 +46,8 @@ variable "key_name" {
 variable "docker_image" {
   type = string
 }
+
+variable "backup_retention_period" {
+  description = "The number of days to retain backups for the database instance"
+  type        = number
+}

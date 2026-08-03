@@ -42,10 +42,21 @@ module "autoscaling" {
   private_app_subnet_ids = module.networking.private_app_subnet_ids
   target_group_arn       = module.load_balancer.target_group_arn
   instance_profile_name  = module.iam.instance_profile_name
+  database_endpoint      = module.database.db_endpoint
+  database_secret_arn    = module.database.master_user_secret_arn
 }
 
 module "iam" {
   source       = "../../modules/iam"
   project_name = var.project_name
   environment  = var.environment
+}
+
+module "database" {
+  source                     = "../../modules/database"
+  project_name               = var.project_name
+  environment                = var.environment
+  private_db_subnet_ids      = module.networking.private_db_subnet_ids
+  database_security_group_id = module.security_group.database_security_group_id
+  backup_retention_period    = var.backup_retention_period
 }

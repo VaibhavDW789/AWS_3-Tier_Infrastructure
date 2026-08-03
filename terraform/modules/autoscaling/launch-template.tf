@@ -17,6 +17,8 @@ resource "aws_launch_template" "app" {
     "${path.module}/user-data.sh",
     {
       docker_image = var.docker_image
+      db_endpoint  = var.database_endpoint
+      secret_arn   = var.database_secret_arn
     }
   ))
 
