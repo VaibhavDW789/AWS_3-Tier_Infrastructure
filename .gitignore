@@ -2,6 +2,7 @@
 .terraform/
 *.tfstate
 *.tfstate.*
+*.tfplan
 crash.log
 override.tf
 override.tf.json
@@ -12,6 +13,11 @@ override.tf.json
 # Variables
 *.tfvars
 *.tfvars.json
+!terraform.tfvars.example
+
+# Secrets
+*.pem
+*.key
 
 # IDE
 .vscode/
